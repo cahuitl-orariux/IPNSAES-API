@@ -35,7 +35,7 @@ export type Clase = {
 };
 
 export function eliminarDiacriticos(texto: string) {
-	return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+	return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
 export type MateriaOptions = {
@@ -55,9 +55,9 @@ export class Materia {
 
 	constructor(options?: MateriaOptions) {
 		if (options) {
-			this.nombre = options.nombre ?? '';
-			this.grupo = options.grupo ?? '';
-			this.profesor = options.profesor ?? '';
+			this.nombre = options.nombre ?? "";
+			this.grupo = options.grupo ?? "";
+			this.profesor = options.profesor ?? "";
 			this.horario = options.horario ?? [];
 		}
 	}
@@ -68,7 +68,7 @@ export class Materia {
 
 	/**
 	 * ID de la materia con el profesor incluido.
-	 * 
+	 *
 	 * Parece ser inútil, pero lo dejo por si se necesita en algún momento.
 	 */
 	get idConProfesor() {
@@ -106,7 +106,9 @@ export class Materia {
 
 	set grupo(grupo: string) {
 		if (grupo && !FORMATO_GRUPO_REGEX.test(grupo)) {
-			throw new Error(`El formato del grupo "${grupo}" no es válido. Debe cumplir con el patrón: uno o más dígitos + exactamente dos letras + uno o más dígitos (ejemplo: 1CV11, 2IM12)`);
+			throw new Error(
+				`El formato del grupo "${grupo}" no es válido. Debe cumplir con el patrón: uno o más dígitos + exactamente dos letras + uno o más dígitos (ejemplo: 1CV11, 2IM12)`
+			);
 		}
 		this._grupo = grupo;
 		// Limpiar el turno para que se recalcule
@@ -114,58 +116,58 @@ export class Materia {
 	}
 
 	get abreviacionNombre() {
-		if (this._abreviacionNombre !== '') {
+		if (this._abreviacionNombre !== "") {
 			return this._abreviacionNombre;
 		}
 
 		if (!this._nombre) {
-			return '';
+			return "";
 		}
-		let abreviacion = '';
-		let palabras = this._nombre.split(' ');
+		let abreviacion = "";
+		let palabras = this._nombre.split(" ");
 
 		const filtro = [
-			'de',
-			'los',
-			'las',
-			'la',
-			'el',
-			'y',
-			'a',
-			'con',
-			'en',
-			'del',
-			'para',
-			'por',
-			'al',
-			'lo',
-			'un',
-			'una',
-			'unos',
-			'unas',
-			'o',
-			'e',
-			'ante',
-			'bajo',
-			'cabe',
-			'contra',
-			'de',
-			'desde',
-			'durante',
-			'en',
-			'entre',
-			'hacia',
-			'hasta',
-			'mediante',
-			'para',
-			'por',
-			'según',
-			'sin',
-			'so',
-			'sobre',
-			'tras',
-			'versus',
-			'vía',
+			"de",
+			"los",
+			"las",
+			"la",
+			"el",
+			"y",
+			"a",
+			"con",
+			"en",
+			"del",
+			"para",
+			"por",
+			"al",
+			"lo",
+			"un",
+			"una",
+			"unos",
+			"unas",
+			"o",
+			"e",
+			"ante",
+			"bajo",
+			"cabe",
+			"contra",
+			"de",
+			"desde",
+			"durante",
+			"en",
+			"entre",
+			"hacia",
+			"hasta",
+			"mediante",
+			"para",
+			"por",
+			"según",
+			"sin",
+			"so",
+			"sobre",
+			"tras",
+			"versus",
+			"vía",
 		];
 
 		palabras = palabras.filter(
@@ -194,7 +196,7 @@ export class Materia {
 
 	get hashNombre() {
 		return Math.abs(
-			(this.nombre as string).split('').reduce((hash, char) => {
+			(this.nombre as string).split("").reduce((hash, char) => {
 				return char.charCodeAt(0) + (hash << 6) + (hash << 16) - hash;
 			}, 0)
 		);

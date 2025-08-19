@@ -1,13 +1,13 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { 
-	Materia, 
-	Dia, 
-	Clase, 
-	FORMATO_GRUPO_REGEX, 
-	materiaFromDiccionario, 
+import {
+	Materia,
+	Dia,
+	Clase,
+	FORMATO_GRUPO_REGEX,
+	materiaFromDiccionario,
 	materiasFromDiccionario,
 	materiaFromJSON,
-	materiasFromJSON
+	materiasFromJSON,
 } from "../../src/Materias";
 import {
 	BaseDatosMaterias,
@@ -184,7 +184,7 @@ describe("Clase Materia", () => {
 			gruposInvalidos.forEach((grupo) => {
 				// Verificar que el regex los identifica como inválidos
 				expect(formatoGrupoRegex.test(grupo)).toBe(false);
-				
+
 				// Verificar que la clase lanza error al intentar asignarlos
 				expect(() => {
 					materia.grupo = grupo;
@@ -389,7 +389,9 @@ describe("Clase Materia", () => {
 			// Verificar propiedades computadas
 			expect(materiaDeserializada.id).toBe(materiaOriginal.id);
 			expect(materiaDeserializada.turno).toBe(materiaOriginal.turno);
-			expect(materiaDeserializada.abreviacionNombre).toBe(materiaOriginal.abreviacionNombre);
+			expect(materiaDeserializada.abreviacionNombre).toBe(
+				materiaOriginal.abreviacionNombre
+			);
 			expect(materiaDeserializada.estaVacia).toBe(materiaOriginal.estaVacia);
 			expect(materiaDeserializada.hashNombre).toBe(materiaOriginal.hashNombre);
 		});
@@ -467,7 +469,9 @@ describe("Clase Materia", () => {
 				// Verificar propiedades computadas
 				expect(materiaDeserializada.id).toBe(materiaOriginal.id);
 				expect(materiaDeserializada.turno).toBe(materiaOriginal.turno);
-				expect(materiaDeserializada.abreviacionNombre).toBe(materiaOriginal.abreviacionNombre);
+				expect(materiaDeserializada.abreviacionNombre).toBe(
+					materiaOriginal.abreviacionNombre
+				);
 				expect(materiaDeserializada.estaVacia).toBe(materiaOriginal.estaVacia);
 			});
 		});
@@ -537,9 +541,13 @@ describe("Clase Materia", () => {
 			const deserializada = materiaFromDiccionario(parseada);
 
 			// Verificar que los caracteres especiales se preservaron
-			expect(deserializada.nombre).toBe("Matemáticas Aplicadas á la Ingeniería");
+			expect(deserializada.nombre).toBe(
+				"Matemáticas Aplicadas á la Ingeniería"
+			);
 			expect(deserializada.profesor).toBe("Dr. José María Rodríguez-Hernández");
-			expect(deserializada.abreviacionNombre).toBe(materiaEspecial.abreviacionNombre);
+			expect(deserializada.abreviacionNombre).toBe(
+				materiaEspecial.abreviacionNombre
+			);
 		});
 
 		it("debería usar materiaFromJSON para deserializar una materia individual directamente desde JSON string", () => {
@@ -574,7 +582,9 @@ describe("Clase Materia", () => {
 			// Verificar propiedades computadas
 			expect(materiaDeserializada.id).toBe(materiaOriginal.id);
 			expect(materiaDeserializada.turno).toBe(materiaOriginal.turno);
-			expect(materiaDeserializada.abreviacionNombre).toBe(materiaOriginal.abreviacionNombre);
+			expect(materiaDeserializada.abreviacionNombre).toBe(
+				materiaOriginal.abreviacionNombre
+			);
 		});
 
 		it("debería usar materiasFromJSON para deserializar múltiples materias directamente desde JSON string", () => {
@@ -638,7 +648,9 @@ describe("Clase Materia", () => {
 				// Verificar propiedades computadas
 				expect(materiaDeserializada.id).toBe(materiaOriginal.id);
 				expect(materiaDeserializada.turno).toBe(materiaOriginal.turno);
-				expect(materiaDeserializada.abreviacionNombre).toBe(materiaOriginal.abreviacionNombre);
+				expect(materiaDeserializada.abreviacionNombre).toBe(
+					materiaOriginal.abreviacionNombre
+				);
 			});
 		});
 
