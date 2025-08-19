@@ -1,0 +1,13 @@
+{
+  "name": "mi-proyecto",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^0.0.0"
+  },
+  "dependencies": {
+    "papaparse": "^5.5.3"
+  }
+}

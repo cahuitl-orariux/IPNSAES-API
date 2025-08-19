@@ -8,6 +8,7 @@ export enum Dia {
 }
 
 export const HORA_REGEX = /(\d{2}):(\d{2})/;
+export const FORMATO_GRUPO_REGEX = /^\d+[a-zA-Z][a-zA-Z]\d+$/;
 
 export type Clase = {
 	dia: Dia;
@@ -45,10 +46,11 @@ export type MateriaOptions = {
 };
 
 export class Materia {
-	private _abreviacionNombre: string = '';
-	private _nombre: string = '';
-	grupo: string = '';
-	profesor: string = '';
+	private _abreviacionNombre: string = "";
+	private _nombre: string = "";
+	private _turno: string = "";
+	private _grupo: string = "";
+	profesor: string = "";
 	horario: Clase[] = [];
 
 	constructor(options?: MateriaOptions) {
@@ -61,16 +63,54 @@ export class Materia {
 	}
 
 	get id() {
-		return `${this.grupo}-${this.nombre}-${this.profesor}`;
+		return `${this._grupo}-${this.nombre}`;
+	}
+
+	/**
+	 * ID de la materia con el profesor incluido.
+	 * 
+	 * Parece ser inútil, pero lo dejo por si se necesita en algún momento.
+	 */
+	get idConProfesor() {
+		return `${this._grupo}-${this.nombre}-${this.profesor}`;
 	}
 
 	get nombre() {
 		return this._nombre;
 	}
 
+	/**
+	 * Turno de la materia en una letra mayúscula.
+	 *
+	 * Los más comunes son:
+	 * - M: matutino
+	 * - V: vespertino
+	 * - X: mixto
+	 */
+	get turno() {
+		if (this._turno !== "") {
+			return this._turno;
+		}
+
+		return this._grupo.match(/\d+[a-z]([a-z])\d+/i)?.[1].toUpperCase();
+	}
+
 	set nombre(nombre: string) {
 		this._nombre = nombre;
-		this._abreviacionNombre = '';
+		this._abreviacionNombre = "";
+	}
+
+	get grupo() {
+		return this._grupo;
+	}
+
+	set grupo(grupo: string) {
+		if (grupo && !FORMATO_GRUPO_REGEX.test(grupo)) {
+			throw new Error(`El formato del grupo "${grupo}" no es válido. Debe cumplir con el patrón: uno o más dígitos + exactamente dos letras + uno o más dígitos (ejemplo: 1CV11, 2IM12)`);
+		}
+		this._grupo = grupo;
+		// Limpiar el turno para que se recalcule
+		this._turno = "";
 	}
 
 	get abreviacionNombre() {
@@ -144,11 +184,11 @@ export class Materia {
 	}
 
 	get estaVacia() {
-		if (this.abreviacionNombre === '') return true;
+		if (this.abreviacionNombre === "") return true;
 		if (this.horario.length === 0) return true;
-		if (this.grupo === '') return true;
-		if (this.nombre === '') return true;
-		if (this.profesor === '') return true;
+		if (this._grupo === "") return true;
+		if (this.nombre === "") return true;
+		if (this.profesor === "") return true;
 		return false;
 	}
 
@@ -169,7 +209,7 @@ export const materiaFromJSON = (json: string) => {
 	let materiaJson = JSON.parse(json);
 	return new Materia({
 		nombre: materiaJson._nombre,
-		grupo: materiaJson.grupo,
+		grupo: materiaJson._grupo,
 		profesor: materiaJson.profesor,
 		horario: materiaJson.horario,
 	});
@@ -182,7 +222,7 @@ export const materiasFromJSON = (json: string) => {
 		materias.push(
 			new Materia({
 				nombre: materia._nombre,
-				grupo: materia.grupo,
+				grupo: materia._grupo,
 				profesor: materia.profesor,
 				horario: materia.horario,
 			})
@@ -194,7 +234,7 @@ export const materiasFromJSON = (json: string) => {
 export const materiaFromDiccionario = (materia: any) => {
 	return new Materia({
 		nombre: materia._nombre,
-		grupo: materia.grupo,
+		grupo: materia._grupo,
 		profesor: materia.profesor,
 		horario: materia.horario,
 	});
@@ -206,7 +246,7 @@ export const materiasFromDiccionario = (materiasRaw: any[]) => {
 		materias.push(
 			new Materia({
 				nombre: materia._nombre,
-				grupo: materia.grupo,
+				grupo: materia._grupo,
 				profesor: materia.profesor,
 				horario: materia.horario,
 			})

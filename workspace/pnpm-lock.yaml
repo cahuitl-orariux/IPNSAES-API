@@ -1,0 +1,31 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      papaparse:
+        specifier: ^5.5.3
+        version: 5.5.3
+    devDependencies:
+      vitest:
+        specifier: ^0.0.0
+        version: 0.0.0
+
+packages:
+
+  papaparse@5.5.3:
+    resolution: {integrity: sha512-5QvjGxYVjxO59MGU2lHVYpRWBBtKHnlIAcSe1uNFCkkptUh63NFRj0FJQm7nR67puEruUci/ZkjmEFrjCAyP4A==}
+
+  vitest@0.0.0:
+    resolution: {integrity: sha512-ZlgUuvCY/lVgrRSWxvsHxZOq9zJ0tdR+ldwFu3FBaFTrdi225932xSwlraUGKg47D8qias6U/1z5VIIu9Zc8aQ==}
+
+snapshots:
+
+  papaparse@5.5.3: {}
+
+  vitest@0.0.0: {}
